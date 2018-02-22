@@ -1,0 +1,9 @@
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\bin\Debug\Tetris.exe.config
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\bin\Debug\Tetris.exe
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\bin\Debug\Tetris.pdb
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\obj\Debug\Tetris.csprojResolveAssemblyReference.cache
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\obj\Debug\Tetris.Form1.resources
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\obj\Debug\Tetris.Properties.Resources.resources
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\obj\Debug\Tetris.csproj.GenerateResource.Cache
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\obj\Debug\Tetris.exe
+E:\기존g\_singledata\00_DevelopProject\2018\Tetris\Tetris\obj\Debug\Tetris.pdb
