@@ -143,9 +143,23 @@ namespace Tetris
             }
            else
             {
+                //if that is possible,
                 if (isPossible())
                 {
+                    for (int row = 0; row < mainShape.size().GetLength(1); row++)
+                    {
+                        for (int col = 0; col < mainShape.size().GetLength(0); col++)
+                        {
+                            if (0 <= mainShape.PointY - row)
+                            {
+                                
+                                thisMap.mapArray[mainShape.PointX + col, mainShape.PointY - row] =0;
+
+                            }
+                        }
+                    }
                     
+                    mainShape.PointY++;
                     for (int row= 0 ; row < mainShape.size().GetLength(1); row++) { 
                         for(int col= 0; col < mainShape.size().GetLength(0); col++)
                         {
@@ -159,7 +173,7 @@ namespace Tetris
                     
                 }
                 Console.WriteLine("clear");
-                mainShape.PointY++;
+                
                 UpdateImage();
             }
         
