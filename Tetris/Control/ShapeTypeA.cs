@@ -14,10 +14,20 @@ namespace Tetris.Control
                                       { 0,1,0,0 } };
         private int CenterX = 1;
         private int CenterY = 2;
+        
+       public ShapeTypeA()
+        {
+            PointX = 5;
+            PointY = 0;
+
+            shapeBox = shape;
+        }
+
 
         public override void rotate()
         {
             throw new NotImplementedException();
         }
+ 
     }
 }

@@ -8,11 +8,33 @@ namespace Tetris.Control
 {
    public abstract class Shape
     {
-        private int[,] shape;
+        protected  int[,] shapeBox;
+
         private int CenterX;
         private int CenterY;
 
+        public int PointX
+        {
+            get;
+            set;
+        }
+        public int PointY
+        {
+            get;
+            set;
+        }
+
         public abstract void rotate();
+        
+        public void down()
+        {
+            PointY++;
+        }
+        
+        public int[,] size()
+        {
+            return shapeBox;
+        }
         
     }
 }
