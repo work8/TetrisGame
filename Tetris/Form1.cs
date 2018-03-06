@@ -17,7 +17,8 @@ namespace Tetris
         private bool isExist = false;
         private Shape mainShape;
         public Panel mapPanel = new Panel();
-        
+        public enum Direction { Left,Right,Down }
+
         public PictureBox[,] mapBox
         {
             get;
@@ -124,7 +125,7 @@ namespace Tetris
 
                 MainTimer = new Timer();
                 MainTimer.Tick += MainTimer_Tick1;
-                MainTimer.Interval = 1000;
+                MainTimer.Interval = 100;
                 MainTimer.Start();
 
             }
@@ -135,16 +136,19 @@ namespace Tetris
 
         private void MainTimer_Tick1(object sender, EventArgs e)
         {
-            Console.WriteLine("execute");
+            
+
           if(isExist==false)
-            {
+            { // Check Shape object was created.
+                Console.WriteLine("Create Shape");
                 mainShape = new ShapeTypeA();
                 isExist = true; 
             }
            else
             {
-                //if that is possible,
-                if (isPossible())
+                
+                //Check that that is possible to move Shape object.
+                if (isPossible(Direction.Down))
                 {
                     for (int row = 0; row < mainShape.size().GetLength(1); row++)
                     {
@@ -172,6 +176,10 @@ namespace Tetris
                     }
                     
                 }
+                else
+                {
+                    isExist = false;
+                }
                 Console.WriteLine("clear");
                 
                 UpdateImage();
@@ -180,10 +188,35 @@ namespace Tetris
 
         }
 
-        private bool isPossible()
+        private bool isPossible(Direction tempDir)
         {
+            if (tempDir == Direction.Down) { 
+                if ((0<=mainShape.PointX)&& (mainShape.PointX + 1 < thisMap.FormX - mainShape.size().GetLength(1)))
+                {
+                    if ((0 <= mainShape.PointY) && (mainShape.PointY +1  < thisMap.FormY))
+                    {
+                        Console.WriteLine("MainShape.pointY : {0} , thisMap.FormY : {1}", mainShape.PointY, thisMap.FormY);
+
+                        
+                            for(int x =0; x<mainShape.size().GetLength(1); x++)
+                            {
+                                if(thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] !=0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY] != 0))
+                                {
+                                return false;
+                                }
+                            }
+                        
+
+                        
+                            return true;
+                    }
+
+                }
+            }
+
+            return false;
             
-            return true;
+            
         }
     }
 }
