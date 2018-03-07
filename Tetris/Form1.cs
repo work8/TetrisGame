@@ -18,7 +18,7 @@ namespace Tetris
         private Shape mainShape;
         public Panel mapPanel = new Panel();
         public enum Direction { Left,Right,Down }
-
+        private Direction currentDirection = Direction.Down;
         public PictureBox[,] mapBox
         {
             get;
@@ -100,7 +100,6 @@ namespace Tetris
                             break;  
                     }
 
-                   // Console.WriteLine("x : {0} , y: {1}", x, y);
                 }
 
                 
@@ -116,28 +115,61 @@ namespace Tetris
 
         #endregion
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (mainShape == null)
+            {
+                if (Keys.S == e.KeyCode)
+                {
+                    MessageBox.Show("START");
+
+                    MainTimer = new Timer();
+                    MainTimer.Tick += MainTimer_Tick1;
+                    MainTimer.Interval = 500;
+                    MainTimer.Start();
+                    return;
+                }
+            }
+
+            else
+            { 
+                switch (e.KeyCode)
+                {
+                    case Keys.Left:
+                        mainShape.left();
+                        break;
+                    case Keys.Right:
+                        mainShape.right();
+                        break;
+                    case Keys.Down:
+                        mainShape.down();
+                        break;
+                }
+            }
+
+
+
+        }
+        
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            MessageBox.Show(e.KeyChar.ToString());
-            if (e.KeyChar.Equals('S'))
-            {
-                MessageBox.Show("START");
+            //MessageBox.Show(e.KeyChar.ToString());
+            //if (e.KeyChar.Equals('S'))
+            //{
+            //    MessageBox.Show("START");
 
-                MainTimer = new Timer();
-                MainTimer.Tick += MainTimer_Tick1;
-                MainTimer.Interval = 100;
-                MainTimer.Start();
+            //    MainTimer = new Timer();
+            //    MainTimer.Tick += MainTimer_Tick1;
+            //    MainTimer.Interval = 100;
+            //    MainTimer.Start();
 
-            }
-            
-
-
+            //}
+                        
         }
 
         private void MainTimer_Tick1(object sender, EventArgs e)
         {
-            
-
+             
           if(isExist==false)
             { // Check Shape object was created.
                 Console.WriteLine("Create Shape");
@@ -146,9 +178,8 @@ namespace Tetris
             }
            else
             {
-                
                 //Check that that is possible to move Shape object.
-                if (isPossible(Direction.Down))
+                if (isPossible(currentDirection))
                 {
                     for (int row = 0; row < mainShape.size().GetLength(1); row++)
                     {
@@ -157,7 +188,7 @@ namespace Tetris
                             if (0 <= mainShape.PointY - row)
                             {
                                 
-                                thisMap.mapArray[mainShape.PointX + col, mainShape.PointY - row] =0;
+                                thisMap.mapArray[mainShape.PointX + col, mainShape.PointY - row] = mainShape.size()[col,mainShape.lengthY - row - 1];
 
                             }
                         }
@@ -169,8 +200,11 @@ namespace Tetris
                         {
                             if(0<=mainShape.PointY - row)
                             {
-                                thisMap.mapArray[mainShape.PointX + col, mainShape.PointY - row] = mainShape.size()[row, col];
-                                
+                                if(thisMap.mapArray[mainShape.PointX + col , mainShape.PointY - row] == 0) { 
+
+                                thisMap.mapArray[mainShape.PointX + col, mainShape.PointY - row] = mainShape.size()[col, mainShape.lengthY - row - 1];
+
+                               }
                             }
                         }
                     }
@@ -179,9 +213,9 @@ namespace Tetris
                 else
                 {
                     isExist = false;
+
                 }
-                Console.WriteLine("clear");
-                
+                currentDirection = Direction.Down;
                 UpdateImage();
             }
         
@@ -200,23 +234,72 @@ namespace Tetris
                         
                             for(int x =0; x<mainShape.size().GetLength(1); x++)
                             {
-                                if(thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] !=0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY] != 0))
-                                {
+                            if (mainShape.size()[x,mainShape.size().GetLength(1) - 1] != 0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] != 0))
+                            //if(thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] !=0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY] != 0))
+                            {
                                 return false;
                                 }
                             }
-                        
 
-                        
                             return true;
                     }
 
                 }
             }
 
+            else if(tempDir == Direction.Left)
+            {
+                if ((0 <= mainShape.PointX) && (mainShape.PointX + 1 < thisMap.FormX - mainShape.size().GetLength(1)))
+                {
+                    if ((0 <= mainShape.PointY) && (mainShape.PointY + 1 < thisMap.FormY))
+                    {
+                        
+                        for (int y = 0; y < mainShape.size().GetLength(2); y++)
+                        {
+                            if (thisMap.mapArray[mainShape.PointX - 1, mainShape.PointY + y] != 0 && (thisMap.mapArray[mainShape.PointX , mainShape.PointY +y] != 0))
+                            {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    }
+
+                }
+
+            }
+            else if(tempDir == Direction.Right)
+            {
+                if ((0 <= mainShape.PointX) && (mainShape.PointX + 1 < thisMap.FormX - mainShape.size().GetLength(1)))
+                {
+                    if ((0 <= mainShape.PointY) && (mainShape.PointY + 1 < thisMap.FormY))
+                    {
+                        Console.WriteLine("MainShape.pointY : {0} , thisMap.FormY : {1}", mainShape.PointY, thisMap.FormY);
+
+
+                        for (int y = 0; y < mainShape.size().GetLength(2); y++)
+                        {
+                            if (thisMap.mapArray[mainShape.PointX + 1, mainShape.PointY + y] != 0 && (thisMap.mapArray[mainShape.PointX, mainShape.PointY + y] != 0))
+                            {
+                                return false;
+                            }
+                        }
+
+                        return true;
+                    }
+
+                }
+
+
+
+
+            }
+
             return false;
             
             
         }
+
+      
     }
 }

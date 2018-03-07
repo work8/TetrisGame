@@ -26,7 +26,7 @@ namespace Tetris.Control
 
         public override void rotate()
         {
-            throw new NotImplementedException();
+        
         }
  
     }

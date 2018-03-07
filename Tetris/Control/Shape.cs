@@ -23,18 +23,39 @@ namespace Tetris.Control
             get;
             set;
         }
+          public int lengthX
+        {
+            get { return shapeBox.GetLength(0); }
+        }
 
+        public int lengthY
+        {
+            get { return shapeBox.GetLength(1); }
+        }
+        
         public abstract void rotate();
         
         public void down()
         {
             PointY++;
         }
-        
+
+        public void left()
+        {
+            PointX--;
+        }
+
+        public void right()
+        {
+            PointX++;
+        }
+
         public int[,] size()
         {
             return shapeBox;
         }
-        
+
+  
+
     }
 }

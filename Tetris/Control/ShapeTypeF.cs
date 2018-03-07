@@ -9,8 +9,8 @@ namespace Tetris.Control
     public class ShapeTypeF : Shape
     {
         private int[,] shape = { { 0,0,0,0 },
-                                      { 0,0,1,1 },
-                                      { 0,1,1,0 },
+                                      { 0,0,6,6 },
+                                      { 0,6,6,0 },
                                       { 0,0,0,0 } };
         private int CenterX;
         private int CenterY;
