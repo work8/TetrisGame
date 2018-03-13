@@ -10,25 +10,25 @@ namespace Tetris.Control
     {
         protected  int[,] shapeBox;
 
-        private int CenterX;
-        private int CenterY;
+        private int CenterCol;
+        private int CenterRow;
 
-        public int PointX
+        public int PointCol
         {
             get;
             set;
         }
-        public int PointY
+        public int PointRow
         {
             get;
             set;
         }
-          public int lengthX
+          public int lengthCol
         {
             get { return shapeBox.GetLength(0); }
         }
 
-        public int lengthY
+        public int lengthRow
         {
             get { return shapeBox.GetLength(1); }
         }
@@ -37,17 +37,17 @@ namespace Tetris.Control
         
         public void down()
         {
-            PointY++;
+            PointRow++;
         }
 
         public void left()
         {
-            PointX--;
+            PointCol--;
         }
 
         public void right()
         {
-            PointX++;
+            PointCol++;
         }
 
         public int[,] size()

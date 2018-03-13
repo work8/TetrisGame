@@ -12,13 +12,14 @@ namespace Tetris.Control
                                       { 0,1,0,0 },
                                       { 0,1,0,0 },
                                       { 0,1,0,0 } };
-        private int CenterX = 1;
-        private int CenterY = 2;
+        private int CenterCol = 1;
+        private int CenterRow = 2;
+        
         
        public ShapeTypeA()
         {
-            PointX = 5;
-            PointY = 0;
+            PointCol = 5;
+            PointRow = -3;
 
             shapeBox = shape;
         }

@@ -10,11 +10,11 @@ namespace Tetris.Control
 {
     public class Map
     {
-        public  int FormX
+        public  int FormCol
         {
             get;set;
         }
-        public  int FormY
+        public  int FormRow
         {
             get; set;
         }
@@ -23,14 +23,14 @@ namespace Tetris.Control
         
         public Map()
         {
-            FormX = 12;
-            FormY = 24;
-            mapArray = new int[FormX, FormY];
-            for (int y = 0; y < FormY; y++)
+            FormCol = 12;
+            FormRow = 24;
+            mapArray = new int[FormRow, FormCol];
+            for (int y = 0; y < FormRow; y++)
             {
-                for (int x = 0; x < FormX; x++)
+                for (int x = 0; x < FormCol; x++)
                 {
-                    mapArray[x, y] = 0;            
+                    mapArray[y, x] = 0;            
                    
                 }
             }
@@ -39,12 +39,12 @@ namespace Tetris.Control
 
         public void outputArray()
         {            
-            for (int y = 0;  y < this.FormY; y++)
+            for (int y = 0;  y < this.FormRow; y++)
             {
                 
-                for (int x = 0; x < this.FormX; x++)
+                for (int x = 0; x < this.FormCol; x++)
                 {
-                    Console.Write(this.mapArray[x, y] + "\t");
+                    Console.Write(this.mapArray[y, x] + "\t");
                 }
                 Console.WriteLine();
             }
