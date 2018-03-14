@@ -18,6 +18,7 @@ namespace Tetris
         private Shape mainShape;
         public Panel mapPanel = new Panel();
         public enum Direction { Left,Right,Down }
+        public enum ShapeType { A=0,B,C,D,E,F,G}
         private Direction currentDirection = Direction.Down;
         public PictureBox[,] mapBox
         {
@@ -96,8 +97,23 @@ namespace Tetris
                             mapBox[y, x].Image = Tetris.Properties.Resources.ShapeAImage;
                             break;
                         case 2:
-                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeImage;
-                            break;  
+                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeBImage;
+                            break;
+                        case 3:
+                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeCImage;
+                            break;
+                        case 4:
+                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeDImage;
+                            break;
+                        case 5:
+                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeEImage;
+                            break;
+                        case 6:
+                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeFImage;
+                            break;
+                        case 7:
+                            mapBox[y, x].Image = Tetris.Properties.Resources.ShapeGImage;
+                            break;
                     }
 
                 }
@@ -115,6 +131,11 @@ namespace Tetris
 
         #endregion
 
+        
+
+
+
+
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (mainShape == null)
@@ -122,7 +143,7 @@ namespace Tetris
                 if (Keys.S == e.KeyCode)
                 {
                     MessageBox.Show("START");
-
+                    thisMap.reDraw();
                     MainTimer = new Timer();
                     MainTimer.Tick += MainTimer_Tick1;
                     MainTimer.Interval = 500;
@@ -161,12 +182,18 @@ namespace Tetris
                             isExist = false;
                         }
                         break;
+                    case Keys.Up:
+                        // 돌릴수있는지 검증 필요
+                        DeleteDrawingOriginalPosition();
+                        mainShape.rotate();
+                        break;
+                    
                 }
                 CalculateDrawingPosition(e.KeyCode);
                 UpdateImage();
 
 
-            }
+            } 
 
 
 
@@ -193,11 +220,11 @@ namespace Tetris
             {
                 for (int col = 0; col < mainShape.lengthCol; col++)
                 {
-                    if (0 <= mainShape.PointRow - row -1)
+                    if (0 <= mainShape.PointRow + row)
                     {
                         //Check that the point was 0 or not , if there wasn't 0  , the place point will be 0.
-                        if (mainShape.size()[col, mainShape.lengthRow - row - 1] != 0)
-                            thisMap.mapArray[mainShape.PointCol + col, mainShape.PointRow - row] = 0;
+                        if (mainShape.size[row, col] != 0)
+                            thisMap.mapArray[mainShape.PointRow + row, mainShape.PointCol + col] = 0;
 
                     }
                 }
@@ -212,11 +239,11 @@ namespace Tetris
                 {
                     if ((0 <= mainShape.PointRow + row) &&(mainShape.PointRow + row < thisMap.FormRow))
                     {
-                        
 
-                            thisMap.mapArray[mainShape.PointCol + col, mainShape.PointRow + row] = mainShape.size()[col, row];
+                        if (mainShape.size[row, col] != 0) { 
+                            thisMap.mapArray[mainShape.PointRow + row,mainShape.PointCol + col] = mainShape.size[row, col];
+                        }
 
-                        
                     }
                 }
             }
@@ -227,9 +254,46 @@ namespace Tetris
         {
              
           if(isExist==false)
-            { // Check Shape object was created.
+            {
+                if(thisMap.isFinish()==true)
+                {
+                    MainTimer.Stop();
+                    mainShape = null;
+                    MessageBox.Show("Game Over");
+                    return; 
+                }
+                
+
+                // Check Shape object was created.
                 Console.WriteLine("Create Shape");
-                mainShape = new ShapeTypeA();
+                Random generateShape = new Random();
+                
+                switch (generateShape.Next(8))
+                {
+                    case 1:
+                        mainShape = new ShapeTypeA();
+                        break;
+
+                    case 2:
+                        mainShape = new ShapeTypeB();
+                        break;
+                    case 3:
+                        mainShape = new ShapeTypeC();
+                        break;
+                    case 4:
+                        mainShape = new ShapeTypeD();
+                        break;
+                    case 5:
+                        mainShape = new ShapeTypeE();
+                        break;
+                    case 6:
+                        mainShape = new ShapeTypeF();
+                        break;
+                    case 7:
+                        mainShape = new ShapeTypeG();
+                        break;
+                }
+                                                
                 isExist = true; 
             }
            else
@@ -249,13 +313,13 @@ namespace Tetris
             
 
             if (tempDir == Direction.Down)
-            { 
-                if (mainShape.PointRow +1  < thisMap.FormRow)
+            {  //메인길이의 마지막을 확인해야되지 않나..
+                if (mainShape.PointRow + mainShape.DownPosition + 1 < thisMap.FormRow)
                     {
                                                 
                             for(int col =0; col<mainShape.lengthCol; col++)
                             {//좌항은 메인 Shape의 object값이 0인지 아닌지 확인 , 우항은 전체 맵에서 해당 값에 데이터가 있는지 확인
-                            if (mainShape.size()[col, mainShape.lengthRow - 1] != 0 && (thisMap.mapArray[mainShape.PointCol + col, mainShape.PointRow + 1] != 0))
+                            if (mainShape.size[mainShape.DownPosition, col] != 0 && (thisMap.mapArray[mainShape.PointRow +mainShape.DownPosition + 1, mainShape.PointCol + col] != 0))
                             //if(thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] !=0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY] != 0))
                             {
                                 return false;
@@ -270,13 +334,13 @@ namespace Tetris
 
             else if(tempDir == Direction.Left)
             {
-                if (mainShape.PointCol -1 >= 0)
+                if (mainShape.PointCol +mainShape.LeftPosition -1 >= 0)
                 {
                     
                         
                         for (int row = 0; row < mainShape.lengthRow; row++)
                         {
-                            if ((mainShape.size()[0,row] != 0) && (thisMap.mapArray[mainShape.PointCol - 1, mainShape.PointRow +row ] !=0))                            
+                            if ((mainShape.size[row, 0] != 0) && (thisMap.mapArray[mainShape.PointRow +row, mainShape.PointCol - 1] !=0))                            
                             //if (thisMap.mapArray[mainShape.PointX - 1, mainShape.PointY + y] != 0 && (thisMap.mapArray[mainShape.PointX , mainShape.PointY +y] != 0))
                             {
                                 return false;
@@ -291,12 +355,12 @@ namespace Tetris
             }
             else if(tempDir == Direction.Right)
             {
-                if (mainShape.PointCol + 1 <= thisMap.FormCol - mainShape.lengthCol )
+                if (mainShape.PointCol + mainShape.RightPosition + 1 < thisMap.FormCol )
                 {
 
                     for (int row = 0; row < mainShape.lengthRow; row++)
                         {
-                            if ((mainShape.size()[mainShape.lengthCol - 1, row] != 0) && (thisMap.mapArray[mainShape.PointCol + mainShape.lengthCol ,row ] !=0))
+                            if ((mainShape.size[row, mainShape.lengthCol - 1] != 0) && (thisMap.mapArray[row, mainShape.PointCol + mainShape.lengthCol] !=0))
                             //if (thisMap.mapArray[mainShape.PointX + 1, mainShape.PointY + y] != 0 && (thisMap.mapArray[mainShape.PointX, mainShape.PointY + y] != 0))
                             {
                                 return false;

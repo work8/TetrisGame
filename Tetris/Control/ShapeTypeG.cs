@@ -12,12 +12,12 @@ namespace Tetris.Control
                                       { 0,7,0,0 },
                                       { 7,7,7,0 },
                                       { 0,0,0,0 } };
-        private int CenterX;
-        private int CenterY;
 
-        public override void rotate()
+        public ShapeTypeG()
         {
-            throw new NotImplementedException();
+            shapeBox = shape;
+            calculatePosition();
         }
+
     }
 }

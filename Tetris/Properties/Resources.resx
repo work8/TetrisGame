@@ -121,6 +121,24 @@
   <data name="ShapeAImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShapeAImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ShapeBImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShapeBImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShapeCImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShapeCImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShapeDImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShapeDImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShapeEImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShapeEImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShapeFImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShapeFImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ShapeGImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShapeGImage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ShapeImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ShapeImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

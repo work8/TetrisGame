@@ -12,23 +12,14 @@ namespace Tetris.Control
                                       { 0,1,0,0 },
                                       { 0,1,0,0 },
                                       { 0,1,0,0 } };
-        private int CenterCol = 1;
-        private int CenterRow = 2;
+       
         
         
        public ShapeTypeA()
         {
-            PointCol = 5;
-            PointRow = -3;
-
             shapeBox = shape;
+            calculatePosition();
         }
 
-
-        public override void rotate()
-        {
-        
-        }
- 
     }
 }

@@ -50,6 +50,29 @@ namespace Tetris.Control
             }
 
         }
-        
+
+        public bool isFinish()
+        {
+            for (int col = 0;  col<mapArray.GetLength(1); col++)
+            {
+                if(mapArray[0, col] != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void reDraw()
+        {
+            for (int row = 0; row < mapArray.GetLength(0); row++) { 
+                for (int col = 0; col < mapArray.GetLength(1); col++)
+                {
+                    mapArray[row, col] = 0;
+                }
+            
+            }
+            return; 
+       }
     }
 }

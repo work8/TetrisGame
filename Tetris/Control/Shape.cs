@@ -6,12 +6,29 @@ using System.Threading.Tasks;
 
 namespace Tetris.Control
 {
-   public abstract class Shape
+   public class Shape
     {
         protected  int[,] shapeBox;
 
         private int CenterCol;
         private int CenterRow;
+
+        public int LeftPosition
+        {
+            get; set;
+        }
+        public int RightPosition
+        {
+            get; set;
+        }
+        public int UpPosition
+        {
+            get; set;
+        }
+        public int DownPosition
+        {
+            get; set;
+        }
 
         public int PointCol
         {
@@ -32,8 +49,71 @@ namespace Tetris.Control
         {
             get { return shapeBox.GetLength(1); }
         }
+
+        public int[,] size
+        {
+            get { return shapeBox; }
+        }
+
+
+        public Shape()
+        {
+            PointCol = 5;
+            PointRow = -3;
+        }
+
+
+
+
+
+
+
+
+
+
+        public  void rotate()
+        {
+            int[,] tempShape = new int[this.lengthRow, this.lengthCol];
+
+            for (int col = 0; col < this.lengthCol; col++)
+            {
+                for (int row = 0; row < this.lengthRow; row++)
+                {
+                    tempShape[col, lengthRow - 1 - row] = shapeBox[row, col];
+                }
+            }
+
+            shapeBox = tempShape;
+
+
+            calculatePosition();
+        }
+
+        protected void calculatePosition()
+        {
+            LeftPosition = 0;
+            RightPosition = 0;
+            UpPosition = 0;
+            DownPosition = 0;
+
+            for (int row= 0; row <lengthRow; row++) { 
+                for(int col = 0; col < lengthCol; col ++)
+                    {
+                        if(shapeBox[row,col]!=0)
+                        {
+                        if (col <LeftPosition ||LeftPosition ==0 )
+                                LeftPosition = col;
+                            if (col > RightPosition || RightPosition == 0)
+                            RightPosition = col;
+                            if (row <= UpPosition)
+                            UpPosition = row;
+                            if (row > DownPosition || DownPosition == 0)
+                            DownPosition = row;
+                        }
+                    }
+            }
+        }
         
-        public abstract void rotate();
         
         public void down()
         {
@@ -50,10 +130,9 @@ namespace Tetris.Control
             PointCol++;
         }
 
-        public int[,] size()
-        {
-            return shapeBox;
-        }
+
+
+      
 
   
 

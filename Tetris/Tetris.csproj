@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1AB94F65-FDBF-47C0-A6BA-D237ACA80BBC}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tetris</RootNamespace>
     <AssemblyName>Tetris</AssemblyName>
@@ -108,7 +108,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ShapeImage.png" />
+    <None Include="Resources\ShapeGImage.bmp" />
+    <Content Include="Resources\ShapeImage.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -124,6 +125,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ShapeAImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShapeBImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShapeCImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShapeDImage.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ShapeEImage.bmp" />
+    <Content Include="Resources\ShapeFImage.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
