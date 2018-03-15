@@ -12,8 +12,10 @@ namespace Tetris
 {
     public partial class Form1 : Form
     {
+        
         private Map thisMap ;
-        private Timer MainTimer;
+        private Timer MainTimer; // 내리는 이벤트를 발생하는 Timer
+        private Timer ServeTimer; //지속적으로 화면갱신을 위한 Timer
         private bool isExist = false;
         private Shape mainShape;
         public Panel mapPanel = new Panel();
@@ -82,10 +84,10 @@ namespace Tetris
 
         private void UpdateImage()
         {
-            Console.WriteLine("updateImage Executed");
+            
             for (int y = 0; y < thisMap.FormRow; y++)
             {
-                Console.WriteLine("updateImage Executed- 1");
+            
                 for (int x = 0; x < thisMap.FormCol; x++)
                 {
                     switch (thisMap.mapArray[y, x])
@@ -121,8 +123,8 @@ namespace Tetris
                 
             }
 
-            thisMap.outputArray();
-            Console.WriteLine("executed!!!!!!");
+            //thisMap.outputArray();
+            //Console.WriteLine("executed!!!!!!");
 
          
             
@@ -137,17 +139,26 @@ namespace Tetris
 
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
+        {if(e.KeyCode==Keys.P)
+            {
+
+            }
             if (mainShape == null)
             {
                 if (Keys.S == e.KeyCode)
                 {
                     MessageBox.Show("START");
                     thisMap.reDraw();
+
                     MainTimer = new Timer();
                     MainTimer.Tick += MainTimer_Tick1;
-                    MainTimer.Interval = 500;
+                    MainTimer.Interval = 300;
                     MainTimer.Start();
+                    ServeTimer = new Timer();
+                    ServeTimer.Tick += ServeTimer_Tick;
+                    ServeTimer.Interval = 80;
+                    ServeTimer.Start();
+
                     return;
                 }
             }
@@ -172,6 +183,8 @@ namespace Tetris
                         break;
 
                     case Keys.Down:
+                           
+
                         if (isPossible(Direction.Down)) {
                             DeleteDrawingOriginalPosition();
                             mainShape.down();
@@ -190,36 +203,30 @@ namespace Tetris
                     
                 }
                 CalculateDrawingPosition(e.KeyCode);
-                UpdateImage();
+                //UpdateImage();
 
-
+                
             } 
 
 
 
         }
-        
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+
+        private void ServeTimer_Tick(object sender, EventArgs e)
         {
-            //MessageBox.Show(e.KeyChar.ToString());
-            //if (e.KeyChar.Equals('S'))
-            //{
-            //    MessageBox.Show("START");
-
-            //    MainTimer = new Timer();
-            //    MainTimer.Tick += MainTimer_Tick1;
-            //    MainTimer.Interval = 100;
-            //    MainTimer.Start();
-
-            //}
-                        
+            UpdateImage();
         }
+
         private void DeleteDrawingOriginalPosition()
         {
             for (int row = 0; row < mainShape.lengthRow; row++)
             {
                 for (int col = 0; col < mainShape.lengthCol; col++)
                 {
+                    if((mainShape.PointCol + mainShape.LeftPosition < 0)|| (mainShape.PointCol+mainShape.RightPosition >thisMap.FormCol ))
+                    {
+                        break;
+                    }
                     if (0 <= mainShape.PointRow + row)
                     {
                         //Check that the point was 0 or not , if there wasn't 0  , the place point will be 0.
@@ -237,6 +244,11 @@ namespace Tetris
             {
                 for (int col = 0; col < mainShape.lengthCol; col++)
                 {
+                    if ((mainShape.PointCol + mainShape.LeftPosition < 0) || (mainShape.PointCol + mainShape.RightPosition > thisMap.FormCol))
+                    {
+                        break;
+                    }
+
                     if ((0 <= mainShape.PointRow + row) &&(mainShape.PointRow + row < thisMap.FormRow))
                     {
 
@@ -316,13 +328,18 @@ namespace Tetris
             {  //메인길이의 마지막을 확인해야되지 않나..
                 if (mainShape.PointRow + mainShape.DownPosition + 1 < thisMap.FormRow)
                     {
-                                                
+                                     
                             for(int col =0; col<mainShape.lengthCol; col++)
-                            {//좌항은 메인 Shape의 object값이 0인지 아닌지 확인 , 우항은 전체 맵에서 해당 값에 데이터가 있는지 확인
-                            if (mainShape.size[mainShape.DownPosition, col] != 0 && (thisMap.mapArray[mainShape.PointRow +mainShape.DownPosition + 1, mainShape.PointCol + col] != 0))
-                            //if(thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] !=0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY] != 0))
-                            {
-                                return false;
+                            {   if(mainShape.PointRow <=0)
+                                    {
+                                        break;
+                                    }
+                                
+                                //좌항은 메인 Shape의 object값이 0인지 아닌지 확인 , 우항은 전체 맵에서 해당 값에 데이터가 있는지 확인
+                                if (mainShape.size[mainShape.DownPosition, col] != 0 && (thisMap.mapArray[mainShape.PointRow +mainShape.DownPosition + 1, mainShape.PointCol + col] != 0))
+                                //if(thisMap.mapArray[mainShape.PointX + x, mainShape.PointY + 1] !=0 && (thisMap.mapArray[mainShape.PointX + x, mainShape.PointY] != 0))
+                                {
+                                    return false;
                                 }
                             }
 
@@ -340,11 +357,15 @@ namespace Tetris
                         
                         for (int row = 0; row < mainShape.lengthRow; row++)
                         {
-                            if ((mainShape.size[row, 0] != 0) && (thisMap.mapArray[mainShape.PointRow +row, mainShape.PointCol - 1] !=0))                            
+
+                        
+
+                        if ((mainShape.size[row, mainShape.LeftPosition] != 0) && (thisMap.mapArray[mainShape.PointRow +row, mainShape.PointCol +mainShape.LeftPosition - 1] !=0))                            
                             //if (thisMap.mapArray[mainShape.PointX - 1, mainShape.PointY + y] != 0 && (thisMap.mapArray[mainShape.PointX , mainShape.PointY +y] != 0))
                             {
                                 return false;
                             }
+                            
                         }
 
                         return true;
@@ -360,7 +381,7 @@ namespace Tetris
 
                     for (int row = 0; row < mainShape.lengthRow; row++)
                         {
-                            if ((mainShape.size[row, mainShape.lengthCol - 1] != 0) && (thisMap.mapArray[row, mainShape.PointCol + mainShape.lengthCol] !=0))
+                            if ((mainShape.size[row, mainShape.RightPosition] != 0) && (thisMap.mapArray[mainShape.PointRow +row, mainShape.PointCol + mainShape.RightPosition +1] !=0))
                             //if (thisMap.mapArray[mainShape.PointX + 1, mainShape.PointY + y] != 0 && (thisMap.mapArray[mainShape.PointX, mainShape.PointY + y] != 0))
                             {
                                 return false;
@@ -382,6 +403,9 @@ namespace Tetris
             
         }
 
-      
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
     }
 }

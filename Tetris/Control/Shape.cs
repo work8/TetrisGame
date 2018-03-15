@@ -10,6 +10,8 @@ namespace Tetris.Control
     {
         protected  int[,] shapeBox;
 
+        
+
         private int CenterCol;
         private int CenterRow;
 
@@ -101,7 +103,7 @@ namespace Tetris.Control
                     {
                         if(shapeBox[row,col]!=0)
                         {
-                        if (col <LeftPosition ||LeftPosition ==0 )
+                            if (col <LeftPosition  )
                                 LeftPosition = col;
                             if (col > RightPosition || RightPosition == 0)
                             RightPosition = col;
