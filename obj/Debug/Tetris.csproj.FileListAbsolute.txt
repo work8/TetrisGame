@@ -38,3 +38,6 @@ D:\_GJ\_singledata\00_DevelopProject\2018\Personal-DELETE\Tetris\Tetris\obj\Debu
 D:\_GJ\_singledata\00_DevelopProject\2018\Personal-DELETE\Tetris\Tetris\obj\Debug\Tetris.csproj.GenerateResource.Cache
 D:\_GJ\_singledata\00_DevelopProject\2018\Personal-DELETE\Tetris\Tetris\obj\Debug\Tetris.exe
 D:\_GJ\_singledata\00_DevelopProject\2018\Personal-DELETE\Tetris\Tetris\obj\Debug\Tetris.pdb
+D:\_GJ\_singledata\00_DevelopProject\__PrivateProjects\Tetris\Tetris\bin\Debug\Tetris.exe.config
+D:\_GJ\_singledata\00_DevelopProject\__PrivateProjects\Tetris\Tetris\obj\Debug\Tetris.exe
+D:\_GJ\_singledata\00_DevelopProject\__PrivateProjects\Tetris\Tetris\obj\Debug\Tetris.pdb
